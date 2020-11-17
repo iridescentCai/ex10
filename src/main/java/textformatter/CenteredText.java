@@ -64,4 +64,5 @@ public class CenteredText extends AbstractFormattedText {
 		}
 		return true;
 	}
+
 }

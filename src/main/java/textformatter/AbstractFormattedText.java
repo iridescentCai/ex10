@@ -1,7 +1,12 @@
 package textformatter;
 
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.AbstractAction;
 
+@SuppressWarnings("unused")
 public abstract class AbstractFormattedText implements FormattedText {
 
 	// we use a recursive list definition for our formatted text
@@ -25,7 +30,7 @@ public abstract class AbstractFormattedText implements FormattedText {
 	public abstract AbstractFormattedText getInstance();
 
 	/**
-	 * 
+	 *
 	 * @param line
 	 *            represents a line of text
 	 * @return true after the new line of text has been added to the existing
@@ -52,6 +57,7 @@ public abstract class AbstractFormattedText implements FormattedText {
 
 	/**
 	 * @return the number of lines in the FormattedText
+	 *
 	 */
 	@Override
 	public int numlines() {
@@ -69,10 +75,34 @@ public abstract class AbstractFormattedText implements FormattedText {
 		return count;
 	}
 
+
+	/* Count the number of strings, including numbers
+	 * @see textformatter.FormattedText#wordCount()
+	 */
+//	public int wordCount() {
+//		int count = 0;
+//		if (firstLine == null || firstLine.equals("")) return count;
+//		StringTokenizer sc = new StringTokenizer(this.toString()," |\n");
+//		while(sc.hasMoreTokens()) {
+//			count ++;
+//			sc.nextToken();
+//		}
+//		return count;
+//	}
+
+	/* Count the number of strings, excluding numbers
+	 * @see textformatter.FormattedText#wordCount()
+	 */
 	@Override
 	public int wordCount() {
-		// TODO: Implement this method
-		return -1;
+		int count = 0;
+		if (firstLine == null || firstLine.equals("")) return count;
+		Pattern r = Pattern.compile("(\\b[a-zA-Z]+\\b)");
+		Matcher m = r.matcher(this.toString());
+		while (m.find()) {
+			count ++;
+		}
+		return count;
 	}
 
 	@Override

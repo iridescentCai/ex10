@@ -1,18 +1,30 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
 
+group 'CPEN 221'
+version '1.0-SNAPSHOT'
 
-// In this section you declare where to find the dependencies of your project
+sourceCompatibility = 1.14
+
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    implementation 'org.jetbrains:annotations:16.0.2'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
-test.testLogging {
-    exceptionFormat = "full";
-    events "failed", "passed", "skipped", "standardOut", "standardError"
+task copyConfig(type: Copy) {
+    from '../config/checkstyle'
+    into 'config/checkstyle'
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled     true
+        html.enabled    true
+    }
 }

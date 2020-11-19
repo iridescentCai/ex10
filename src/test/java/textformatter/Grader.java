@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RJFormatTest {
+public class Grader {
 
     @Test
     public void test1() {
@@ -87,6 +87,66 @@ public class RJFormatTest {
     public void test10() {
         AbstractFormattedText text = new RightJustifiedText(11);
         assertEquals(false, text.add(""));
+    }
+
+
+    @Test
+    public void test11() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("111\n222\n333");
+        assertEquals("111 222 333\n", text.toString());
+    }
+
+    @Test
+    public void test12() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("111 222 333 444");
+        assertEquals("111 222 333\n        444\n", text.toString());
+    }
+
+    @Test
+    public void test13() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("111\n222\n333\n444");
+        assertEquals("111 222 333\n        444\n", text.toString());
+    }
+
+    @Test
+    public void test14() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("abcdefghijkl\nabc");
+        assertEquals("abcdefghijkl\n        abc\n", text.toString());
+    }
+
+    @Test
+    public void test15() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("abcdefghijkl\nabc");
+        assertEquals(2, text.wordCount());
+    }
+
+    @Test
+    public void test16() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("111\n222\n333\n444");
+        assertEquals(4, text.wordCount());
+    }
+
+    @Test
+    public void test17() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("111\n222\n333\n444");
+        text.add("111 222");
+        text.add("333");
+        assertEquals(7, text.wordCount());
+    }
+
+    @Test
+    public void test18() {
+        AbstractFormattedText text = new RightJustifiedText(11);
+        text.add("abcdef+ghi");
+        text.add("333");
+        assertEquals(2, text.wordCount());
     }
 
 }
